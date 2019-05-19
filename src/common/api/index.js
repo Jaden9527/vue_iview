@@ -1,6 +1,7 @@
 import axios from './axios'
 import config from './apiConfig'
-const baseUrl = config.baseUrl
+const baseUrl = process.env.BASE_API;
+
 let instance = axios();
 export default {
     get(url, params, headers) {
