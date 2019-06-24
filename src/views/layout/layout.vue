@@ -8,7 +8,6 @@
                 collapsible
                 :collapsed-width="78"
                 v-model="isCollapsed"
-                reverse-arrow
             >
                 <Menu :active-name="$route.meta.name" theme="dark" width="auto" :class="menuitemClasses">
                     <template v-for="item, index in routeList" v-if="item.show">
