@@ -3,7 +3,6 @@
         <h1>{{ msg }}</h1>
         <h2>Essential Links</h2>
         <h3>{{this.$store.state.count}}</h3>
-        <h3>{{this.$store.getters.getStateCount}}</h3>
         <Button @click="addFn" type="primary">add</Button>
         <Button @click="reductFn" type="dashed">delete</Button>
     </div>

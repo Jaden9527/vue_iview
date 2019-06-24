@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import permission from './modules/permission'
+import getters from './getters'
 
 Vue.use(Vuex);
 
@@ -8,11 +9,7 @@ const store = new Vuex.Store({
     state: {
         count: 2
     },
-    getters: {
-        getStateCount: function (state) {
-            return state.count + 1;
-        }
-    },
+    getters,
     mutations: {
         add(state, text = 1) { // 上面定义的state
             state.count = state.count + text;

@@ -1,55 +1,43 @@
-/**
- * 递归过滤异步路由表，返回符合用户角色权限的路由表
- * @param routes asyncRoutes
- * @param roles
- */
-export function filterAsyncRoutes(routes, roles) {
-    const res = []
-  
-    routes.forEach(route => {
-      const tmp = { ...route }
-      if (hasPermission(roles, tmp)) {
-        if (tmp.children) {
-          tmp.children = filterAsyncRoutes(tmp.children, roles)
+/** 判断路由是否在菜单显示 */
+function showRoute(list = [], parent) {
+    let parentShow = false;
+    list.forEach((item,index) => {
+        /** 如果设置权限进行权限验证，没有设置默认为有权限 */
+        item.meta.roles = item.meta.roles || [];
+        if (item.meta.roles.length > 0) {
+            item["show"] = item.meta.roles.includes("admin");
+            parentShow = item.meta.roles.includes("admin") ? true : parentShow;
+        } else {
+            item["show"] = true;
+            parentShow = true;
         }
-        res.push(tmp)
-      }
-    })
-  
-    return res
-  }
 
+        if(index == list.length - 1 && parent && !parentShow) {
+            parent.show = false;
+        }
+
+        if (item.children) {
+            showRoute(item.children, item);
+        }
+    });
+}
 
 const permission = {
     state: {
-        routes: [],
-        addRoutes: []
-    },
-    getters: {
-        getStateCount: function (state) {
-            return state.count + 1;
-        }
+        routeList: [],
+        roles: ['admin'] // 用户权限
     },
     mutations: {
         // 上面定义的state
         SET_ROUTES: (state, routes) => {
-            state.addRoutes = routes
-            state.routes = constantRoutes.concat(routes)
+            state.routeList = routes
         }
     },
     actions: { //注册actions， 类似vue 的 methods
-        GenerateRoutes({ commit }, data) {
-            return new Promise(resolve => {
-                const { roles } = data
-                let accessedRoutes
-                if (roles.includes('admin')) {
-                    accessedRoutes = asyncRoutes
-                } else {
-                    accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-                }
-                commit('SET_ROUTES', accessedRoutes)
-                resolve(accessedRoutes)
-            })
+        GenerateRoutes(context, routes = []) {
+            showRoute(routes); 
+
+            context.commit('SET_ROUTES', routes)
         }
     }
 };
