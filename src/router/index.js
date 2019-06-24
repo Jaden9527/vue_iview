@@ -1,20 +1,27 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import iView from 'iview';
-import HelloWorld from '@/components/HelloWorld';
+/* Layout */
+import Layout from '@/views/layout/Layout'
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
-      meta: {
-        title: '首页'
-      }
-    }
+      path: '',
+      component: Layout,
+      redirect: 'dashboard',
+      show: true,
+      children: [
+        {
+          path: 'dashboard',
+          component: () => import('@/views/dashboard/index'),
+          name: 'Dashboard',
+          meta: { title: '首页', icon: 'ios-navigate' }
+        }
+      ]
+    },
   ]
 })
 
