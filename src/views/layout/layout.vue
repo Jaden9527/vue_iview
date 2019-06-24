@@ -1,56 +1,56 @@
 <template>
-    <div class="layout">
-        <Layout style="height:100%">
-            <Sider
-                ref="side1"
-                class="slider"
-                hide-trigger
-                collapsible
-                :collapsed-width="78"
-                v-model="isCollapsed"
+  <div class="layout">
+    <Layout style="height:100%">
+      <Sider
+        ref="side1"
+        class="slider"
+        hide-trigger
+        collapsible
+        :collapsed-width="78"
+        v-model="isCollapsed"
+      >
+        <Menu :active-name="$route.meta.name" theme="dark" width="auto" :class="menuitemClasses">
+          <template v-for="item, index in routeList" v-if="item.show">
+            <MenuItem
+              v-if="item.children.length <= 1"
+              :name="item.children[0].meta.name"
+              :key="item.children[0].meta.name"
             >
-                <Menu :active-name="$route.meta.name" theme="dark" width="auto" :class="menuitemClasses">
-                    <template v-for="item, index in routeList" v-if="item.show">
-                        <MenuItem
-                            v-if="item.children.length <= 1"
-                            :name="item.children[0].meta.name"
-                            :key="item.children[0].meta.name"
-                        >
-                            <Icon v-if="item.children[0].meta.icon" :type="item.children[0].meta.icon"></Icon>
-                            <span>{{item.children[0].meta.name}}</span>
-                        </MenuItem>
-                        <Submenu v-else :name="item.meta.name" :key="item.meta.name">
-                            <template slot="title">
-                                <Icon v-if="item.meta.icon" :type="item.meta.icon"></Icon>
-                                <span>{{item.meta.title}}</span>
-                            </template>
-                            <template v-for="child in item.children" v-if="child.show">
-                                <MenuItem :name="child.meta.name" :key="child.meta.name">
-                                    <Icon v-if="child.meta.icon" :type="child.meta.icon"></Icon>
-                                    <span>{{child.meta.title}}</span>
-                                </MenuItem>
-                            </template>
-                        </Submenu>
-                    </template>
-                </Menu>
-            </Sider>
-            <Layout>
-                <Header :style="{padding: 0}" class="layout-header-bar">
-                    <Icon
-                        @click.native="collapsedSider"
-                        :class="rotateIcon"
-                        :style="{margin: '0 20px'}"
-                        type="md-menu"
-                        size="24"
-                    ></Icon>
-                </Header>
-                <Content :style="{margin: '15px', background: '#fff', minHeight: '260px'}">
-                    <router-view :key="key"></router-view>
-                    <p>{{routeList}}</p>
-                </Content>
-            </Layout>
-        </Layout>
-    </div>
+              <Icon v-if="item.children[0].meta.icon" :type="item.children[0].meta.icon"></Icon>
+              <span>{{item.children[0].meta.name}}</span>
+            </MenuItem>
+            <Submenu v-else :name="item.meta.name" :key="item.meta.name">
+              <template slot="title">
+                <Icon v-if="item.meta.icon" :type="item.meta.icon"></Icon>
+                <span>{{item.meta.title}}</span>
+              </template>
+              <template v-for="child in item.children" v-if="child.show">
+                <MenuItem :name="child.meta.name" :key="child.meta.name">
+                  <Icon v-if="child.meta.icon" :type="child.meta.icon"></Icon>
+                  <span>{{child.meta.title}}</span>
+                </MenuItem>
+              </template>
+            </Submenu>
+          </template>
+        </Menu>
+      </Sider>
+      <Layout>
+        <Header :style="{padding: 0}" class="layout-header-bar">
+          <Icon
+            @click.native="collapsedSider"
+            :class="rotateIcon"
+            :style="{margin: '0 20px'}"
+            type="md-menu"
+            size="24"
+          ></Icon>
+        </Header>
+        <Content :style="{margin: '15px', background: '#fff', minHeight: '260px'}">
+          <router-view :key="key"></router-view>
+          <p>{{routeList}}</p>
+        </Content>
+      </Layout>
+    </Layout>
+  </div>
 </template>
 <script>
 export default {
@@ -79,16 +79,22 @@ export default {
     collapsedSider() {
       this.$refs.side1.toggleCollapse();
     },
-    de() {
-      console.log("route", this.$route);
-    }
-  },
-  created() {
-    this.de();
   }
 };
 </script>
 
+<style>
+.collapsed-menu .ivu-icon-ios-arrow-down:before {
+  content: none;
+}
+.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
+  padding: 20px 20px;
+}
+.collapsed-menu .ivu-menu-submenu .ivu-menu-item {
+    padding-left: 35px !important;
+    padding-bottom: 0 !important;
+}
+</style>
 <style scoped>
 .layout {
   background: #f5f7f9;

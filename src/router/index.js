@@ -53,7 +53,7 @@ export const constantRoutes = [
       {
         path: 'home',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页', name: 'home', icon: 'ios-navigate'}
+        meta: { title: '首页', name: 'home', icon: 'ios-aperture'}
       }
     ]
   },
@@ -62,19 +62,19 @@ export const constantRoutes = [
     component: Layout,
     meta: {
       title: 'dashboard',
-      icon: 'ios-navigate',
+      icon: 'md-analytics',
       name: 'dashboard',
     },
     children: [
       {
         path: 'home1',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页12', name: 'home1', icon: 'ios-navigate', roles: ['admin2']}
+        meta: { title: '首页12', name: 'home1', icon: 'ios-navigate', roles: ['admin']}
       },
       {
         path: 'home12',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页123', name: 'home12', icon: 'ios-navigate', roles: ['admin']}
+        meta: { title: '首页123', name: 'home12', icon: 'md-bookmarks', roles: ['admin']}
       }
     ]
   },
