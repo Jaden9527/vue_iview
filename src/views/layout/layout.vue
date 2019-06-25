@@ -19,19 +19,19 @@
           <template v-for="item, index in routeList" v-if="item.show && !item.hidden">
             <MenuItem
               v-if="item.children.length <= 1"
-              :name="item.children[0].meta.name"
-              :key="item.children[0].meta.name"
+              :name="item.children[0].name"
+              :key="item.children[0].name"
             >
               <Icon v-if="item.children[0].meta.icon" :type="item.children[0].meta.icon"></Icon>
-              <span>{{item.children[0].meta.name}}</span>
+              <span>{{item.children[0].meta.title}}</span>
             </MenuItem>
-            <Submenu v-else :name="item.meta.name" :key="item.meta.name">
+            <Submenu v-else :name="item.name" :key="item.name">
               <template slot="title">
                 <Icon v-if="item.meta.icon" :type="item.meta.icon"></Icon>
                 <span>{{item.meta.title}}</span>
               </template>
               <template v-for="child in item.children" v-if="child.show && !child.hidden">
-                <MenuItem :name="child.meta.name" :key="child.meta.name">
+                <MenuItem :name="child.name" :key="child.name">
                   <Icon v-if="child.meta.icon" :type="child.meta.icon"></Icon>
                   <span>{{child.meta.title}}</span>
                 </MenuItem>
@@ -127,10 +127,14 @@ export default {
     /** 用户信息/注销 */
     handleClickUserDropdown(name) {
       if (name === "UserProfile") {
-
       } else if (name === "loginout") {
-        // this.$store.commit("app/logout", this);
-        // location.reload();
+        this.$router.push({
+          name: "login",
+          query: {
+            //路由传参时push和query搭配使用 ，作用时传递参数
+            id: 1
+          }
+        });
       }
     }
   }

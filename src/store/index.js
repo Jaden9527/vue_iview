@@ -27,7 +27,8 @@ const store = new Vuex.Store({
         }
     },
     modules: { //可以将store分割成多个模块
-        permission
+        permission,
+        app
     }
 });
 

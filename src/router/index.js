@@ -19,11 +19,16 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-  // {
-  //   path: '/login',
-  //   component: () => import('@/views/login/index'),
-  //   hidden: true
-  // },
+  {
+    path: '/login',
+    component: () => import('@/views/login/login'),
+    hidden: true,
+    name: 'login',
+    meta: {
+      title: '登录',
+      icon: 'logo-vimeo',
+    },
+  },
   // {
   //   path: '/auth-redirect',
   //   component: () => import('@/views/login/authredirect'),
@@ -53,7 +58,8 @@ export const constantRoutes = [
       {
         path: '/home',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页', name: 'home', icon: 'ios-aperture'}
+        name: 'home',
+        meta: { title: '首页', icon: 'ios-aperture'}
       }
     ]
   },
@@ -70,12 +76,14 @@ export const constantRoutes = [
       {
         path: 'home1',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页12', name: 'home1', icon: 'ios-navigate', roles: ['admin']}
+        name: 'home1',
+        meta: { title: '首页12', icon: 'ios-navigate', roles: ['admin']}
       },
       {
         path: 'home12',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页123', name: 'home12', icon: 'md-bookmarks', roles: ['admin']}
+        component: () => import('@/components/HelloWorld'),
+        name: 'home12',
+        meta: { title: '首页123', icon: 'md-bookmarks', roles: ['admin']}
       }
     ]
   },
