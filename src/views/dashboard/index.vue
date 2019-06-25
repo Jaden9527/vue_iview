@@ -18,10 +18,10 @@ export default {
     },
     methods: {
         addFn: function() {
-            this.$store.dispatch('add', 3);
+            this.$store.dispatch('add', 2);
         },
         reductFn: function() {
-            this.$store.dispatch('reduct', 5);
+            this.$store.dispatch('reduct', 4);
         }
     }
 };

@@ -12,7 +12,7 @@
         <!-- logo -->
         <template>
           <div :class="logoClass">
-            <img v-if="logo" :src="logo" class="sidebar-logo">
+            <img src="../../common/images/vueLogo.png" class="sidebar-logo">
             <h1 v-if="!isCollapsed" class="sidebar-title">{{ title }}</h1>
           </div>
         </template>
@@ -107,7 +107,6 @@
           :style="{margin: '80px 15px 15px', background: '#fff', minHeight: '260px',overflow: 'auto'}"
         >
           <router-view :key="key"></router-view>
-          <p>{{routeList}}</p>
         </Content>
       </Layout>
     </Layout>
@@ -120,8 +119,6 @@ export default {
       currentPageName: null,
       isCollapsed: false,
       title: "Vue iView",
-      logo:
-        "https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png"
     };
   },
   computed: {
@@ -141,7 +138,7 @@ export default {
       return this.$route.fullPath;
     },
     userName() {
-      return this.$store.state.app.userName || '未登录';
+      return this.$store.getters.userName || '未登录';
     },
     /** 返回页签列表 */
     pageTagsList() {
@@ -179,7 +176,7 @@ export default {
         });
       }
     },
-    /** 关闭当前页签 */
+    /** 关闭所选页签 */
     closePage(event, name) {
       this.$store.commit("removeTag", name);
       let pageOpenedList = this.$store.state.app.pageOpenedList;
