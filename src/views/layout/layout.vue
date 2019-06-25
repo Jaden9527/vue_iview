@@ -16,6 +16,7 @@
             <h1 v-if="!isCollapsed" class="sidebar-title">{{ title }}</h1>
           </div>
         </template>
+        <!-- 菜单 -->
         <Menu
           :active-name="$route.name"
           theme="dark"
@@ -49,6 +50,7 @@
         </Menu>
       </Sider>
       <Layout>
+        <!-- 头部 -->
         <Header :style="{padding: 0}" :class="headerClass">
           <div class="flex-row">
             <div class="flex-grow-0">
@@ -61,19 +63,27 @@
               ></Icon>
             </div>
             <div class="flex-grow-1 tags-inner-scroll-body">
-              <Tag type="dot" color="primary">标签一</Tag>
-              <Tag type="dot" closable color="default">标签二</Tag>
+              <Tag
+                type="dot"
+                v-for="item in pageTagsList"
+                :key="item.name"
+                :name="item.name"
+                @click.native="linkTo(item)"
+                @on-close="closePage"
+                :closable="item.name==='home'?false:true"
+                :color="item.children?(item.children[0].name===currentPageName?'primary':'default'):(item.name===currentPageName?'primary':'default')"
+              >{{item.meta.title}}</Tag>
             </div>
             <div class="flex-grow-0" style="margin: 0px 10px;">
               <!-- 标签页清除 -->
               <span>
-                <Dropdown style="margin: 0px 10px">
+                <Dropdown style="margin: 0px 10px" @on-click="handleTagsOption">
                   <Button type="primary">LabelOptions
                     <Icon type="ios-arrow-down"></Icon>
                   </Button>
                   <DropdownMenu slot="list">
-                    <DropdownItem>清除全部</DropdownItem>
-                    <DropdownItem>清除其他</DropdownItem>
+                    <DropdownItem name="clearAll">清除全部</DropdownItem>
+                    <DropdownItem name="clearOthers">清除其他</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </span>
@@ -93,7 +103,9 @@
             </div>
           </div>
         </Header>
-        <Content :style="{margin: '80px 15px 15px', background: '#fff', minHeight: '260px',overflow: 'auto'}">
+        <Content
+          :style="{margin: '80px 15px 15px', background: '#fff', minHeight: '260px',overflow: 'auto'}"
+        >
           <router-view :key="key"></router-view>
           <p>{{routeList}}</p>
         </Content>
@@ -105,6 +117,7 @@
 export default {
   data() {
     return {
+      currentPageName: null,
       isCollapsed: false,
       title: "Vue iView",
       logo:
@@ -127,6 +140,11 @@ export default {
     key() {
       return this.$route.fullPath;
     },
+    /** 返回页签列表 */
+    pageTagsList() {
+      return this.$store.getters.pageOpenedList || [];
+    },
+    /** 根据路由生成菜单项 */
     routeList() {
       const route = this.$router.options.routes || [];
       this.$store.dispatch("GenerateRoutes", route);
@@ -153,12 +171,76 @@ export default {
           }
         });
       }
+    },
+    /** 关闭当前页签 */
+    closePage(event, name) {
+      this.$store.commit("removeTag", name);
+      let pageOpenedList = this.$store.state.app.pageOpenedList;
+      if (this.currentPageName === name) {
+        let lastPageName = "";
+        if (pageOpenedList.length > 1) {
+          lastPageName = pageOpenedList[pageOpenedList.length - 1].name;
+        } else {
+          lastPageName = pageOpenedList[0].name;
+        }
+        this.$router.push({
+          name: lastPageName
+        });
+      }
+    },
+    /** 跳转所选标签页 */
+    linkTo(item) {
+      let routerObj = {};
+      if (item.name != this.currentPageName) {
+        this.$router.push({
+          name: item.name
+        });
+      }
+    },
+    /** 清除页签 */
+    handleTagsOption(type) {
+      if (type === "clearAll") {
+        this.$store.commit("clearAllTags");
+        this.$router.push({
+          name: "home"
+        });
+      } else {
+        this.$store.commit("clearOtherTags", this);
+      }
+    }
+  },
+  created() {
+    this.currentPageName = this.$route.name;
+    let obj = {
+      meta: this.$route.meta,
+      path: this.$route.path,
+      name: this.$route.name
+    };
+    this.$store.dispatch("GeneratePageOpenedList", obj);
+  },
+  mounted() {},
+  /** 监听,当路由发生变化的时候执行 */
+  watch: {
+    $route(to, from) {
+      if (to.name != this.currentPageName) {
+        this.currentPageName = to.name;
+        let obj = {
+          meta: to.meta,
+          path: to.path,
+          name: to.name
+        };
+
+        this.$store.dispatch("GeneratePageOpenedList", obj);
+      }
     }
   }
 };
 </script>
 
 <style>
+body {
+  overflow: hidden !important;
+}
 .collapsed-menu .ivu-icon-ios-arrow-down:before {
   content: none;
 }
@@ -170,7 +252,7 @@ export default {
   padding-left: 35px !important;
   padding-bottom: 0 !important;
 }
-.ivu-menu-dark.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
   background: none;
 }
 .ivu-tag-dot {
@@ -182,7 +264,6 @@ export default {
 </style>
 <style lang="less" scoped>
 @import "../../common/style/flex.css";
-
 .logo {
   padding: 10px 20px;
   background: #2b2f3a;

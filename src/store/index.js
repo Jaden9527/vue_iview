@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import permission from './modules/permission'
 import getters from './getters'
+import permission from './modules/permission'
+import app from './modules/app'
 
 Vue.use(Vuex);
 
