@@ -92,7 +92,7 @@
                 <img class="avatar" src="../../common/images/usericon.jpg">
                 <Dropdown transfer trigger="hover" @on-click="handleClickUserDropdown">
                   <a href="javascript:void(0)" style="padding-left:10px;">
-                    <span style="color:#1890ff">admin</span>
+                    <span style="color:#1890ff">{{userName}}</span>
                   </a>
                   <DropdownMenu slot="list">
                     <DropdownItem name="UserProfile">个人信息</DropdownItem>
@@ -140,6 +140,9 @@ export default {
     key() {
       return this.$route.fullPath;
     },
+    userName() {
+      return this.$store.state.app.userName || '未登录';
+    },
     /** 返回页签列表 */
     pageTagsList() {
       return this.$store.getters.pageOpenedList || [];
@@ -163,7 +166,11 @@ export default {
     handleClickUserDropdown(name) {
       if (name === "UserProfile") {
       } else if (name === "loginout") {
-        this.$router.push({
+        localStorage.removeItem("userName");
+        localStorage.removeItem("password");
+        localStorage.removeItem("rememberMe");
+
+        this.$router.replace({
           name: "login",
           query: {
             //路由传参时push和query搭配使用 ，作用时传递参数

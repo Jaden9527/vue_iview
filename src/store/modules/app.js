@@ -1,3 +1,6 @@
+import { resolve } from "url";
+import { rejects } from "assert";
+
 const app = {
     state: {
         /** 打开的标签页 */
@@ -5,7 +8,8 @@ const app = {
             meta: { title: '首页' },
             path: '',
             name: 'home'
-        }]
+        }],
+        userName: null
     },
     mutations: {
         // 上面定义的state
@@ -49,11 +53,24 @@ const app = {
                     state.pageOpenedList.splice(index, 1);
                 }
             });
+        },
+        SET_NAME(state, userName) {
+            state.userName = userName;
         }
     },
     actions: { //注册actions， 类似vue 的 methods
-        GeneratePageOpenedList(context, page) {
-            context.commit('setPageOpenedList', page)
+        GeneratePageOpenedList(content, page) {
+            content.commit('setPageOpenedList', page)
+        },
+        login(content,userInfo) {
+            const { userName, password, rememberMe } = userInfo;
+            return new Promise((resolve, reject) => {
+                localStorage.setItem("userName", userName);
+                localStorage.setItem("password", password);
+                localStorage.setItem("rememberMe", rememberMe);
+                content.commit('SET_NAME',userName)
+                resolve();
+            })
         }
     }
 };

@@ -98,8 +98,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) { //判断是否有标题
     document.title = to.meta.title;
   }
-  // var isLogin = sessionStorage.getItem("sessionId"); // 判断是否登录，本地存储有用户数据则视为已经登录
-  var isLogin = true; // 判断是否登录，本地存储有用户数据则视为已经登录
+  var isLogin = localStorage.getItem("userName"); // 判断是否登录，本地存储有用户数据则视为已经登录
   if (isLogin) {
     //如果用户信息存在则往下执行。
     next()
@@ -108,8 +107,8 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login' || to.path === '/register') {
       next()
     } else {
-      next(`/login?redirect=${to.path}`); //否则全部重定向到登录页
-      document.title = "登陆";
+      next(`/login?redirect=${to.path}&query=${JSON.stringify(to.query)}&params=${JSON.stringify(to.params)}`); //否则全部重定向到登录页
+      document.title = "登录";
     }
   }
 });

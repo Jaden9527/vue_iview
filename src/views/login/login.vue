@@ -44,7 +44,8 @@
                 <div>
                     <Checkbox v-model="loginModel.rememberMe" size="large">记住密码</Checkbox>
                     <a style="float:right;font-size: 14px;margin-top: 3px;color:#1890ff;">
-                        <span>忘记密码</span> | <span>注册</span>
+                        <span>忘记密码</span>|
+                        <span>注册</span>
                     </a>
                 </div>
                 <div style="margin-top:15px">
@@ -74,22 +75,67 @@ export default {
         userName: [
           {
             required: true,
-            message: '请输入用户名',
+            message: "请输入用户名",
             trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: '请输入密码',
+            message: "请输入密码",
             trigger: "blur"
           }
         ]
+      },
+      redirect: null,
+      otherQuery: {
+          query:null,
+          params: null
       }
     };
   },
   methods: {
-    login() {}
+    login() {
+      let vm = this;
+      vm.$refs.loginform.validate(valid => {
+        if (valid) {
+          vm.$Message.loading({
+            content: "登录中...",
+            duration: 0
+          });
+
+          vm.$store
+            .dispatch("login", vm.loginModel)
+            .then(() => {
+              setTimeout(function() {
+                vm.$Message.destroy();
+                vm.$router.replace({
+                  path: vm.redirect || "/",
+                  query: vm.otherQuery.query ? JSON.parse(vm.otherQuery.query) : null,
+                  params: vm.otherQuery.params ? JSON.parse(vm.otherQuery.params) : null,
+                });
+              }, 1000);
+            })
+            .catch(err => {
+              console.log("loginFail", err);
+            });
+        }
+      });
+    },
+  },
+  watch: {
+    /** 监听路由是否有重定向  */
+    $route: {
+      handler: function(route) {
+        const query = route.query;
+        if (query) {
+          this.redirect = query.redirect;
+          this.otherQuery.query = query.query;
+          this.otherQuery.params = query.params;
+        }
+      },
+      immediate: true
+    }
   }
 };
 </script>
