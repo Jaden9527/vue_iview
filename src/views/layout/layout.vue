@@ -93,7 +93,7 @@
             </div>
           </div>
         </Header>
-        <Content :style="{margin: '80px 15px 15px', background: '#fff', minHeight: '260px'}">
+        <Content :style="{margin: '80px 15px 15px', background: '#fff', minHeight: '260px',overflow: 'auto'}">
           <router-view :key="key"></router-view>
           <p>{{routeList}}</p>
         </Content>
