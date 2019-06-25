@@ -170,7 +170,7 @@ export default {
   padding-left: 35px !important;
   padding-bottom: 0 !important;
 }
-.ivu-menu-item .ivu-menu-item-active .ivu-menu-item-selected {
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
   background: none;
 }
 .ivu-tag-dot {
