@@ -177,25 +177,25 @@ a {
     font-size: 12px;
 }
 /**下拉选择样式**/
-.ivu-select-dropdown {
-    background: rgba(9, 67, 94, 0.85);
-    border: 1px solid rgba(29, 181, 195, 0.85);
-}
+// .ivu-select-dropdown {
+//     background: rgba(9, 67, 94, 0.85);
+//     border: 1px solid rgba(29, 181, 195, 0.85);
+// }
 
-.ivu-dropdown-menu {
-    min-width: auto;
-}
+// .ivu-dropdown-menu {
+//     min-width: auto;
+// }
 
-.ivu-dropdown-item {
-    padding: 0.5rem 1rem;
-    color: rgba(255, 255, 255, 1);
+// .ivu-dropdown-item {
+//     padding: 0.5rem 1rem;
+//     color: rgba(255, 255, 255, 1);
 
-    &:hover {
-        background: linear-gradient(rgb(64, 222, 244), rgb(31, 138, 231));
-        /* 标准的语法 */
-        color: #000;
-    }
-}
+//     &:hover {
+//         background: linear-gradient(rgb(64, 222, 244), rgb(31, 138, 231));
+//         /* 标准的语法 */
+//         color: #000;
+//     }
+// }
 
 .ivu-select-item {
     padding: 0.5rem 1rem;
@@ -251,10 +251,13 @@ tr.ivu-table-row-hover td {
 /**滚动条样式**/
 ::-webkit-scrollbar-track-piece {
     background: #d3dce6;
+    border-radius: 20px;
+    width: 1px;
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
+    height: 5px  /*滚动条高度*/
 }
 
 ::-webkit-scrollbar-thumb {

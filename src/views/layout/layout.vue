@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <Content class="layout">
     <Layout style="height:100%">
       <Sider
         ref="side1"
@@ -9,7 +9,13 @@
         :collapsed-width="78"
         v-model="isCollapsed"
       >
-        <Menu :active-name="$route.meta.name" theme="dark" width="auto" :class="menuitemClasses">
+        <Menu
+          :active-name="$route.meta.name"
+          theme="dark"
+          width="auto"
+          :class="menuitemClasses"
+          @on-select="changeMenu"
+        >
           <template v-for="item, index in routeList" v-if="item.show && !item.hidden">
             <MenuItem
               v-if="item.children.length <= 1"
@@ -36,13 +42,48 @@
       </Sider>
       <Layout>
         <Header :style="{padding: 0}" class="layout-header-bar">
-          <Icon
-            @click.native="collapsedSider"
-            :class="rotateIcon"
-            :style="{margin: '0 20px'}"
-            type="md-menu"
-            size="24"
-          ></Icon>
+          <div class="flex-row">
+            <div class="flex-grow-0">
+              <Icon
+                @click.native="collapsedSider"
+                :class="rotateIcon"
+                :style="{margin: '0 20px'}"
+                type="md-menu"
+                size="24"
+              ></Icon>
+            </div>
+            <div class="flex-grow-1 tags-inner-scroll-body">
+              <Tag type="dot" color="primary">标签一</Tag>
+              <Tag type="dot" closable color="default">标签二</Tag>
+            </div>
+            <div class="flex-grow-0" style="margin: 0px 10px;">
+              <!-- 标签页清除 -->
+              <span>
+                <Dropdown style="margin: 0px 10px">
+                  <Button type="primary">LabelOptions
+                    <Icon type="ios-arrow-down"></Icon>
+                  </Button>
+                  <DropdownMenu slot="list">
+                    <DropdownItem>清除全部</DropdownItem>
+                    <DropdownItem>清除其他</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </span>
+              <!-- 用户信息 -->
+              <span>
+                <img class="avatar" src="../../common/images/usericon.jpg">
+                <Dropdown transfer trigger="hover" @on-click="handleClickUserDropdown">
+                  <a href="javascript:void(0)" style="padding-left:10px;">
+                    <span style="color:#1890ff">admin</span>
+                  </a>
+                  <DropdownMenu slot="list">
+                    <DropdownItem name="UserProfile">个人信息</DropdownItem>
+                    <DropdownItem name="loginout" divided>注销</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </span>
+            </div>
+          </div>
         </Header>
         <Content :style="{margin: '15px', background: '#fff', minHeight: '260px'}">
           <router-view :key="key"></router-view>
@@ -50,7 +91,7 @@
         </Content>
       </Layout>
     </Layout>
-  </div>
+  </Content>
 </template>
 <script>
 export default {
@@ -79,6 +120,19 @@ export default {
     collapsedSider() {
       this.$refs.side1.toggleCollapse();
     },
+    /** 切换菜单 */
+    changeMenu(name) {
+      this.$router.push({ name: name });
+    },
+    /** 用户信息/注销 */
+    handleClickUserDropdown(name) {
+      if (name === "UserProfile") {
+
+      } else if (name === "loginout") {
+        // this.$store.commit("app/logout", this);
+        // location.reload();
+      }
+    }
   }
 };
 </script>
@@ -87,15 +141,37 @@ export default {
 .collapsed-menu .ivu-icon-ios-arrow-down:before {
   content: none;
 }
-.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
+.ivu-menu-vertical .ivu-menu-item,
+.ivu-menu-vertical .ivu-menu-submenu-title {
   padding: 20px 20px;
 }
 .collapsed-menu .ivu-menu-submenu .ivu-menu-item {
-    padding-left: 35px !important;
-    padding-bottom: 0 !important;
+  padding-left: 35px !important;
+  padding-bottom: 0 !important;
+}
+.ivu-tag-dot {
+  padding: 0 12px !important;
+}
+.ivu-tag-primary span {
+  color: #1890ff !important;
 }
 </style>
-<style scoped>
+<style lang="less" scoped>
+@import "../../common/style/flex.css";
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.tags-inner-scroll-body {
+  white-space: nowrap;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+}
+
 .layout {
   background: #f5f7f9;
   position: relative;

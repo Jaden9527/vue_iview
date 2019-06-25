@@ -1,0 +1,192 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #fafafa;
+}
+body {
+  width: 100%;
+  height: 100%;
+  background: #fafafa;
+  font-family: '微软雅黑';
+}
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-user-select: none;
+  -moz-user-focus: none;
+  -moz-user-select: none;
+  color: #b6defd;
+}
+.fr {
+  float: right;
+}
+.fl {
+  float: left;
+}
+.tr {
+  text-align: right;
+}
+.tl {
+  text-align: left;
+}
+.tc {
+  text-align: center;
+}
+.inline-block {
+  display: inline-block;
+  position: relative;
+}
+.pd {
+  padding: 1rem;
+}
+.he {
+  height: 100%;
+}
+.pr-1 {
+  padding-right: 1rem;
+}
+.pl-1 {
+  padding-left: 1rem;
+}
+.pt-1 {
+  padding-top: 1rem;
+}
+.pb-1 {
+  padding-bottom: 1rem;
+}
+.background {
+  background: #00000029;
+}
+.pr-5 {
+  padding-right: 0.5rem;
+}
+.pl-5 {
+  padding-left: 0.5rem;
+}
+.pt-5 {
+  padding-top: 0.5rem;
+}
+.pb-5 {
+  padding-bottom: 0.5rem;
+}
+.block {
+  display: block;
+}
+.pointer {
+  cursor: pointer;
+}
+.inlineBlock {
+  display: block;
+}
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.ellipsis {
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.juzhong {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/**选择框样式**/
+>>>.ivu-select-single .ivu-select-selection {
+  background-color: rgba(0, 50, 80, 0.7);
+  border: 1px solid #57a3f3;
+}
+>>>.ivu-input {
+  background-color: rgba(0, 50, 80, 0.7);
+  border: 1px solid #57a3f3;
+}
+/**标签页样式**/
+>>>.ivu-tabs-nav .ivu-tabs-tab {
+  color: #2d8cf0;
+}
+>>>.ivu-tabs-nav .ivu-tabs-tab-active,
+>>>.ivu-tabs-nav .ivu-tabs-tab-focused {
+  color: #fff;
+}
+>>>.ivu-tabs-bar {
+  border-bottom: 2px solid rgba(33, 122, 144, 0.8);
+}
+>>>.ivu-tabs-nav-container {
+  margin-bottom: -2px;
+}
+>>>.ivu-tabs-ink-bar {
+  background-color: #00c7ff;
+}
+>>>.ivu-tabs-nav-container {
+  font-size: 12px;
+}
+/**下拉选择样式**/
+.ivu-select-item {
+  padding: 0.5rem 1rem;
+  color: #ffffff;
+}
+/**表格公用样式**/
+.ivu-table-cell {
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+}
+.ivu-table td,
+.ivu-table th {
+  border-bottom: 1px solid #153e78;
+  background: none;
+}
+.ivu-table tr:hover {
+  background: rgba(21, 62, 120, 0.70196078);
+}
+.ivu-table th {
+  background: rgba(21, 62, 120, 0.70196078);
+}
+.ivu-table {
+  background: none;
+  color: rgba(255, 255, 255, 0.90980392);
+  border: none;
+}
+.ivu-table:before {
+  background: none;
+}
+.ivu-table:after {
+  background: none;
+}
+.ivu-table-wrapper {
+  position: relative;
+  border: 0px solid #dcdee2;
+  border-bottom: 0;
+  border-right: 0;
+}
+tr.ivu-table-row-hover td {
+  background: none;
+  background-color: none;
+}
+/**滚动条样式**/
+::-webkit-scrollbar-track-piece {
+  background: #d3dce6;
+  border-radius: 20px;
+  width: 1px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px /*滚动条高度*/;
+}
+::-webkit-scrollbar-thumb {
+  background: #99a9bf;
+  border-radius: 20px;
+}
