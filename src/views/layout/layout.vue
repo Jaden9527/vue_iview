@@ -9,11 +9,19 @@
         :collapsed-width="78"
         v-model="isCollapsed"
       >
+        <!-- logo -->
+        <template>
+          <div :class="logoClass">
+            <img v-if="logo" :src="logo" class="sidebar-logo">
+            <h1 v-if="!isCollapsed" class="sidebar-title">{{ title }}</h1>
+          </div>
+        </template>
         <Menu
-          :active-name="$route.meta.name"
+          :active-name="$route.name"
           theme="dark"
           width="auto"
           :class="menuitemClasses"
+          accordion
           @on-select="changeMenu"
         >
           <template v-for="item, index in routeList" v-if="item.show && !item.hidden">
@@ -41,7 +49,7 @@
         </Menu>
       </Sider>
       <Layout>
-        <Header :style="{padding: 0}" class="layout-header-bar">
+        <Header :style="{padding: 0}" :class="headerClass">
           <div class="flex-row">
             <div class="flex-grow-0">
               <Icon
@@ -85,7 +93,7 @@
             </div>
           </div>
         </Header>
-        <Content :style="{margin: '15px', background: '#fff', minHeight: '260px'}">
+        <Content :style="{margin: '80px 15px 15px', background: '#fff', minHeight: '260px'}">
           <router-view :key="key"></router-view>
           <p>{{routeList}}</p>
         </Content>
@@ -97,7 +105,10 @@
 export default {
   data() {
     return {
-      isCollapsed: false
+      isCollapsed: false,
+      title: "Vue iView",
+      logo:
+        "https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png"
     };
   },
   computed: {
@@ -106,6 +117,12 @@ export default {
     },
     menuitemClasses() {
       return ["menu-item", this.isCollapsed ? "collapsed-menu" : ""];
+    },
+    headerClass() {
+      return ["layout-header-bar", this.isCollapsed ? "collapsed-header" : ""];
+    },
+    logoClass() {
+      return ["logo", this.isCollapsed ? "collapsed-logo" : ""];
     },
     key() {
       return this.$route.fullPath;
@@ -153,6 +170,9 @@ export default {
   padding-left: 35px !important;
   padding-bottom: 0 !important;
 }
+.ivu-menu-item .ivu-menu-item-active .ivu-menu-item-selected {
+  background: none;
+}
 .ivu-tag-dot {
   padding: 0 12px !important;
 }
@@ -163,6 +183,35 @@ export default {
 <style lang="less" scoped>
 @import "../../common/style/flex.css";
 
+.logo {
+  padding: 10px 20px;
+  background: #2b2f3a;
+  display: flex;
+  align-items: center;
+}
+.collapsed-logo {
+  padding: 20px;
+}
+.sidebar-logo {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  margin-right: 12px;
+}
+.sidebar-title {
+  display: inline-block;
+  margin: 0;
+  color: #fff;
+  font-weight: 600;
+  line-height: 50px;
+  font-size: 14px;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .avatar {
   width: 32px;
   height: 32px;
@@ -186,6 +235,16 @@ export default {
 .layout-header-bar {
   background: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - 200px);
+  -webkit-transition: width 0.28s;
+  transition: width 0.28s;
+}
+.collapsed-header {
+  width: calc(100% - 78px);
 }
 .layout-logo-left {
   width: 90%;

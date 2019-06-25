@@ -30,11 +30,6 @@ export const constantRoutes = [
     },
   },
   // {
-  //   path: '/auth-redirect',
-  //   component: () => import('@/views/login/authredirect'),
-  //   hidden: true
-  // },
-  // {
   //   path: '/404',
   //   component: () => import('@/views/errorPage/404'),
   //   hidden: true
@@ -48,10 +43,10 @@ export const constantRoutes = [
     path: '',
     component: Layout,
     redirect: '/home',
+    name: '',
     meta: {
       title: 'dashboard',
       icon: 'ios-navigate',
-      name: 'dashboard',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -67,10 +62,10 @@ export const constantRoutes = [
     path: '/main',
     component: Layout,
     hidden: false,
+    name: 'main',
     meta: {
       title: 'dashboard',
       icon: 'md-analytics',
-      name: 'dashboard',
     },
     children: [
       {

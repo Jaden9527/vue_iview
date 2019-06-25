@@ -108,15 +108,15 @@ a {
 /**选择框样式**/
 >>>.ivu-select-single .ivu-select-selection {
   background-color: rgba(0, 50, 80, 0.7);
-  border: 1px solid #57a3f3;
+  border: 1px solid #1890ff;
 }
 >>>.ivu-input {
   background-color: rgba(0, 50, 80, 0.7);
-  border: 1px solid #57a3f3;
+  border: 1px solid #1890ff;
 }
 /**标签页样式**/
 >>>.ivu-tabs-nav .ivu-tabs-tab {
-  color: #2d8cf0;
+  color: #1890ff;
 }
 >>>.ivu-tabs-nav .ivu-tabs-tab-active,
 >>>.ivu-tabs-nav .ivu-tabs-tab-focused {
