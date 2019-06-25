@@ -42,7 +42,7 @@ export const constantRoutes = [
   {
     path: '',
     component: Layout,
-    redirect: 'home',
+    redirect: '/home',
     meta: {
       title: 'dashboard',
       icon: 'ios-navigate',
@@ -51,15 +51,16 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'home',
+        path: '/home',
         component: () => import('@/views/dashboard/index'),
         meta: { title: '首页', name: 'home', icon: 'ios-aperture'}
       }
     ]
   },
   {
-    path: 'ass',
+    path: '/main',
     component: Layout,
+    hidden: false,
     meta: {
       title: 'dashboard',
       icon: 'md-analytics',
@@ -116,76 +117,3 @@ router.afterEach((to, from, next) => {
 });
 
 export default router;
-
-/** 路由需要权限 */
-export const asyncRoutes = [
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/HelloWorld',
-    alwaysShow: true, // will always show the root menu
-    meta: {
-      title: 'permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'HelloWorld',
-        component: () => import('@/components/HelloWorld'),
-        name: 'HelloWorld',
-        meta: {
-          title: 'HelloWorld',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      // {
-      //   path: 'directive',
-      //   component: () => import('@/views/permission/directive'),
-      //   name: 'DirectivePermission',
-      //   meta: {
-      //     title: 'directivePermission'
-      //     // if do not set roles, means: this page does not require permission
-      //   }
-      // }
-    ]
-  },
-
-  // {
-  //   path: '/icon',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/svg-icons/index'),
-  //       name: 'Icons',
-  //       meta: { title: 'icons', icon: 'icon', noCache: true }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/error',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   name: 'ErrorPages',
-  //   meta: {
-  //     title: 'errorPages',
-  //     icon: '404'
-  //   },
-  //   children: [
-  //     {
-  //       path: '401',
-  //       component: () => import('@/views/errorPage/401'),
-  //       name: 'Page401',
-  //       meta: { title: 'page401', noCache: true }
-  //     },
-  //     {
-  //       path: '404',
-  //       component: () => import('@/views/errorPage/404'),
-  //       name: 'Page404',
-  //       meta: { title: 'page404', noCache: true }
-  //     }
-  //   ]
-  // },
-  { path: '*', redirect: '/404', hidden: true }
-]

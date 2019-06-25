@@ -10,7 +10,7 @@
         v-model="isCollapsed"
       >
         <Menu :active-name="$route.meta.name" theme="dark" width="auto" :class="menuitemClasses">
-          <template v-for="item, index in routeList" v-if="item.show">
+          <template v-for="item, index in routeList" v-if="item.show && !item.hidden">
             <MenuItem
               v-if="item.children.length <= 1"
               :name="item.children[0].meta.name"
@@ -24,7 +24,7 @@
                 <Icon v-if="item.meta.icon" :type="item.meta.icon"></Icon>
                 <span>{{item.meta.title}}</span>
               </template>
-              <template v-for="child in item.children" v-if="child.show">
+              <template v-for="child in item.children" v-if="child.show && !child.hidden">
                 <MenuItem :name="child.meta.name" :key="child.meta.name">
                   <Icon v-if="child.meta.icon" :type="child.meta.icon"></Icon>
                   <span>{{child.meta.title}}</span>
