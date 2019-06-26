@@ -45,7 +45,7 @@
                     <Checkbox v-model="loginModel.rememberMe" size="large">记住密码</Checkbox>
                     <a style="float:right;font-size: 14px;margin-top: 3px;color:#1890ff;">
                         <span>忘记密码</span>|
-                        <span>注册</span>
+                        <span @click="register">注册</span>
                     </a>
                 </div>
                 <div style="margin-top:15px">
@@ -122,6 +122,9 @@ export default {
         }
       });
     },
+    register() {
+      this.$router.push({path: '/register'});
+    }
   },
   watch: {
     /** 监听路由是否有重定向  */

@@ -62,13 +62,24 @@ const app = {
         GeneratePageOpenedList(content, page) {
             content.commit('setPageOpenedList', page)
         },
-        login(content,userInfo) {
+        login(content, userInfo) {
             const { userName, password, rememberMe } = userInfo;
             return new Promise((resolve, reject) => {
                 localStorage.setItem("userName", userName);
                 localStorage.setItem("password", password);
                 localStorage.setItem("rememberMe", rememberMe);
-                content.commit('SET_NAME',userName)
+                content.commit('SET_NAME', userName)
+                resolve();
+            })
+        },
+        register(content, userInfo) {
+            const { userName, email, phone, password } = userInfo;
+            return new Promise((resolve, reject) => {
+                localStorage.setItem("userName", userName);
+                localStorage.setItem("password", password);
+                localStorage.setItem("email", email);
+                localStorage.setItem("phone", phone);
+                content.commit('SET_NAME', userName)
                 resolve();
             })
         }

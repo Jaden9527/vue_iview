@@ -20,6 +20,16 @@ export const constantRoutes = [
     },
   },
   {
+    path: '/register',
+    component: () => import('@/views/login/register'),
+    hidden: true,
+    name: 'register',
+    meta: {
+      title: '注册',
+      icon: 'logo-wordpress',
+    },
+  },
+  {
     path: '/404',
     component: () => import('@/views/errorPage/404'),
     name: '404',
