@@ -28,11 +28,15 @@ export const constantRoutes = [
     },
     hidden: true
   },
-  // {
-  //   path: '/401',
-  //   component: () => import('@/views/errorPage/401'),
-  //   hidden: true
-  // },
+  {
+    path: '/401',
+    component: () => import('@/views/errorPage/401'),
+    hidden: true,
+    name: '401',
+    meta: {
+      title: '权限不足',
+    },
+  },
   {
     path: '',
     component: Layout,
@@ -63,16 +67,16 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'home1',
-        component: () => import('@/views/dashboard/index'),
-        name: 'home1',
-        meta: { title: '首页12', icon: 'ios-navigate', roles: ['admin'] }
-      },
-      {
         path: 'home12',
         component: () => import('@/components/HelloWorld'),
         name: 'home12',
-        meta: { title: '首页123', icon: 'md-bookmarks', roles: ['admin'] }
+        meta: { title: '首页12', icon: 'ios-navigate', roles: ['admin'] }
+      },
+      {
+        path: 'home13',
+        component: () => import('@/views/dashboard/index'),
+        name: 'home13',
+        meta: { title: '首页13', icon: 'md-bookmarks', roles: ['editor'] }
       }
     ]
   },
@@ -98,17 +102,38 @@ router.beforeEach((to, from, next) => {
   // from: Route: 当前导航正要离开的路由
   // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
   iView.LoadingBar.start();
+  let role = false;
   if (to.meta) {
     if (to.meta.title) { //判断是否有标题
       document.title = to.meta.title;
     }
+    if (to.meta.roles) {
+      if (to.meta.roles.length > 0) {
+        role = to.meta.roles.some(function (value, index, _ary) {
+          if (value == 'admin') {
+            return true;
+          }
+        });
+      }else {
+        role = true;
+      }
+    } else {
+      role = true;
+    }
+  } else {
+    role = true;
   }
 
   var userName = localStorage.getItem("userName"); // 判断是否登录，本地存储有用户数据则视为已经登录
   if (userName) {
     //如果用户信息存在则往下执行。
-    store.commit('SET_NAME', userName)
-    next()
+    store.commit('SET_NAME', userName);
+    /** 判断用户有没有访问权限 */
+    if (role) {
+      next()
+    } else {
+      next(`/401`)
+    }
   } else {
     //如果用户token不存在则跳转到login页面
     if (to.path === '/login' || to.path === '/register') {
