@@ -78,9 +78,10 @@
               <!-- 标签页清除 -->
               <span>
                 <Dropdown style="margin: 0px 10px" @on-click="handleTagsOption">
-                  <Button type="primary">LabelOptions
+                  <!-- <Button type="primary">LabelOptions
                     <Icon type="ios-arrow-down"></Icon>
-                  </Button>
+                  </Button> -->
+                  <Icon type="ios-cog-outline" size="22"/>
                   <DropdownMenu slot="list">
                     <DropdownItem name="clearAll">清除全部</DropdownItem>
                     <DropdownItem name="clearOthers">清除其他</DropdownItem>
