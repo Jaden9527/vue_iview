@@ -3,7 +3,7 @@
     <div class="content">
       <div class="main mainBorder">
         <p style="text-align: center;">
-          <span class="systemName">Vue iView Management System</span>
+          <span class="systemName">Vue iView <br>Management System</span>
         </p>
         <Form ref="loginform" :rules="rules" :model="loginModel">
           <FormItem prop="userName">
