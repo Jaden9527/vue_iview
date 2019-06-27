@@ -111,11 +111,51 @@ import { validEmail, validPhone } from "@/common/utils/validate";
 export default {
   name: "register",
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.loginModel.confirmPassword !== "") {
+          this.$refs.loginform.validateField("confirmPassword");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.loginModel.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+
+    var checkEmail = (rule, value, callback) => {
+      if (value === "") {
+        return callback(new Error("请输入邮箱"));
+      } else if (!validEmail(this.loginModel.email)) {
+        return callback(new Error("邮箱格式不正确"));
+      } else {
+        callback();
+      }
+    };
+    var checkPhone = (rule, value, callback) => {
+      if (value === "") {
+        return callback(new Error("请输入手机号"));
+      } else if (!validPhone(this.loginModel.phone)) {
+        return callback(new Error("手机号不正确"));
+      } else {
+        callback();
+      }
+    };
     return {
       loginModel: {
         userName: "",
         password: "",
-        rememberMe: false
+        email: "",
+        phone: "",
+        confirmPassword: ""
       },
       rules: {
         userName: [
@@ -127,29 +167,25 @@ export default {
         ],
         email: [
           {
-            required: true,
-            message: "请输入邮箱",
+            validator: checkEmail,
             trigger: "blur"
           }
         ],
         phone: [
           {
-            required: true,
-            message: "请输入手机号",
+            validator: checkPhone,
             trigger: "blur"
           }
         ],
         password: [
           {
-            required: true,
-            message: "请输入密码",
+            validator: validatePass,
             trigger: "blur"
           }
         ],
         confirmPassword: [
           {
-            required: true,
-            message: "请确认密码",
+            validator: validatePass2,
             trigger: "blur"
           }
         ]
@@ -170,7 +206,7 @@ export default {
             vm.$Message.error("邮箱格式不正确");
             return;
           }
-           if (!validPhone(vm.loginModel.phone)) {
+          if (!validPhone(vm.loginModel.phone)) {
             vm.$Message.error("手机号不正确");
             return;
           }
@@ -190,11 +226,12 @@ export default {
               setTimeout(function() {
                 vm.$Message.destroy();
                 vm.$router.replace({
-                  path: '/',
+                  path: "/"
                 });
               }, 1000);
             })
             .catch(err => {
+              vm.$Message.destroy();
               console.log("registerFail", err);
             });
         }

@@ -1,64 +1,59 @@
 <template>
-    <div class="container">
-        <div class="content">
-            <div class="main mainBorder">
-                <p style="text-align: center;">
-                    <span class="systemName">Vue iView Management System</span>
-                </p>
-                <Form ref="loginform" :rules="rules" :model="loginModel">
-                    <FormItem prop="userName">
-                        <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
-                            <i
-                                class="ivu-icon ivu-icon-ios-person ivu-input-icon ivu-input-icon-normal"
-                                style="left:0"
-                            ></i>
-                            <input
-                                v-model="loginModel.userName"
-                                autocomplete="off"
-                                spellcheck="false"
-                                type="text"
-                                :placeholder="'用户名'"
-                                class="ivu-input ivu-input-large"
-                                style="padding-left:32px;padding-right:0"
-                            >
-                        </div>
-                    </FormItem>
-                    <FormItem prop="password">
-                        <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
-                            <i
-                                class="ivu-icon ivu-icon-ios-lock ivu-input-icon ivu-input-icon-normal"
-                                style="left:0"
-                            ></i>
-                            <input
-                                v-model="loginModel.password"
-                                autocomplete="off"
-                                spellcheck="false"
-                                type="password"
-                                :placeholder="'用户密码'"
-                                class="ivu-input ivu-input-large"
-                                style="padding-left:32px;padding-right:0"
-                            >
-                        </div>
-                    </FormItem>
-                </Form>
-                <div>
-                    <Checkbox v-model="loginModel.rememberMe" size="large">记住密码</Checkbox>
-                    <a style="float:right;font-size: 14px;margin-top: 3px;color:#1890ff;">
-                        <span>忘记密码</span>|
-                        <span @click="register">注册</span>
-                    </a>
-                </div>
-                <div style="margin-top:15px">
-                    <Button
-                        @click="login"
-                        long
-                        size="large"
-                        style="color:#fff;background-color:#1890ff;"
-                    >登录</Button>
-                </div>
+  <div class="container">
+    <div class="content">
+      <div class="main mainBorder">
+        <p style="text-align: center;">
+          <span class="systemName">Vue iView Management System</span>
+        </p>
+        <Form ref="loginform" :rules="rules" :model="loginModel">
+          <FormItem prop="userName">
+            <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
+              <i
+                class="ivu-icon ivu-icon-ios-person ivu-input-icon ivu-input-icon-normal"
+                style="left:0"
+              ></i>
+              <input
+                v-model="loginModel.userName"
+                autocomplete="off"
+                spellcheck="false"
+                type="text"
+                :placeholder="'用户名'"
+                class="ivu-input ivu-input-large"
+                style="padding-left:32px;padding-right:0"
+              >
             </div>
+          </FormItem>
+          <FormItem prop="password">
+            <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
+              <i
+                class="ivu-icon ivu-icon-ios-lock ivu-input-icon ivu-input-icon-normal"
+                style="left:0"
+              ></i>
+              <input
+                v-model="loginModel.password"
+                autocomplete="off"
+                spellcheck="false"
+                type="password"
+                :placeholder="'用户密码'"
+                class="ivu-input ivu-input-large"
+                style="padding-left:32px;padding-right:0"
+              >
+            </div>
+          </FormItem>
+        </Form>
+        <div>
+          <Checkbox v-model="loginModel.rememberMe" size="large">记住密码</Checkbox>
+          <a style="float:right;font-size: 14px;margin-top: 3px;color:#1890ff;">
+            <span>忘记密码</span>|
+            <span @click="register">注册</span>
+          </a>
         </div>
+        <div style="margin-top:15px">
+          <Button @click="login" long size="large" style="color:#fff;background-color:#1890ff;">登录</Button>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -89,8 +84,8 @@ export default {
       },
       redirect: null,
       otherQuery: {
-          query:null,
-          params: null
+        query: null,
+        params: null
       }
     };
   },
@@ -111,19 +106,24 @@ export default {
                 vm.$Message.destroy();
                 vm.$router.replace({
                   path: vm.redirect || "/",
-                  query: vm.otherQuery.query ? JSON.parse(vm.otherQuery.query) : null,
-                  params: vm.otherQuery.params ? JSON.parse(vm.otherQuery.params) : null,
+                  query: vm.otherQuery.query
+                    ? JSON.parse(vm.otherQuery.query)
+                    : null,
+                  params: vm.otherQuery.params
+                    ? JSON.parse(vm.otherQuery.params)
+                    : null
                 });
               }, 1000);
             })
             .catch(err => {
+              vm.$Message.destroy();
               console.log("loginFail", err);
             });
         }
       });
     },
     register() {
-      this.$router.push({path: '/register'});
+      this.$router.push({ path: "/register" });
     }
   },
   watch: {
