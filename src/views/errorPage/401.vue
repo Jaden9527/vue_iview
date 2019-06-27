@@ -1,23 +1,23 @@
 <template>
-    <div class="errPage-container">
-        <Button type="primary" style="background:#008489" @click="back">返回</Button>
-        <Row>
-            <Col :span="12">
-                <h1 class="text-jumbo text-ginormous">Oops!</h1>
-                <h2>你没有权限去该页面</h2>
-                <h6>如有不满请联系管理员</h6>
-                <ul class="list-unstyled">
-                    <li>或者你可以去:</li>
-                    <li class="link-type">
-                        <router-link to="/">回首页</router-link>
-                    </li>
-                </ul>
-            </Col>
-            <Col :span="12">
-                <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">
-            </Col>
-        </Row>
-    </div>
+  <div class="errPage-container">
+    <Button type="primary" style="background:#008489" @click="back">返回</Button>
+    <Row>
+      <Col :span="12">
+        <h1 class="text-jumbo text-ginormous">Oops!</h1>
+        <h2>你没有权限去该页面</h2>
+        <h6>如有不满请联系管理员</h6>
+        <ul class="list-unstyled">
+          <li>或者你可以去:</li>
+          <li class="link-type">
+            <router-link to="/">回首页</router-link>
+          </li>
+        </ul>
+      </Col>
+      <Col :span="12">
+        <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">
+      </Col>
+    </Row>
+  </div>
 </template>
 
 <script>
@@ -44,6 +44,13 @@ export default {
   }
 };
 </script>
+
+<style>
+html,
+body {
+  background: #ffffff;
+}
+</style>
 
 <style lang="less" scoped>
 .errPage-container {
@@ -105,8 +112,8 @@ export default {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
-}
-ul {
+  }
+  ul {
     display: block;
     list-style-type: disc;
     margin-block-start: 1em;
@@ -114,6 +121,6 @@ ul {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 40px;
-}
+  }
 }
 </style>
