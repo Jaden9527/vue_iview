@@ -89,11 +89,15 @@
               </span>
               <!-- 用户信息 -->
               <span>
-                <img class="avatar" src="../../common/images/usericon.jpg">
                 <Dropdown transfer trigger="hover" @on-click="handleClickUserDropdown">
-                  <a href="javascript:void(0)" style="padding-left:10px;">
-                    <span style="color:#1890ff">{{userName}}</span>
-                  </a>
+                  <template>
+                    <div>
+                      <img class="avatar" src="../../common/images/usericon.jpg">
+                      <a href="javascript:void(0)" style="padding-left:5px;">
+                        <span style="color:#1890ff">{{userName}}</span>
+                      </a>
+                    </div>
+                  </template>
                   <DropdownMenu slot="list">
                     <DropdownItem name="UserProfile">个人信息</DropdownItem>
                     <DropdownItem name="loginout" divided>注销</DropdownItem>
@@ -118,7 +122,7 @@ export default {
     return {
       currentPageName: null,
       isCollapsed: false,
-      title: "Vue iView",
+      title: "Vue iView"
     };
   },
   computed: {
@@ -138,7 +142,7 @@ export default {
       return this.$route.fullPath;
     },
     userName() {
-      return this.$store.getters.userName || '未登录';
+      return this.$store.getters.userName || "未登录";
     },
     /** 返回页签列表 */
     pageTagsList() {
@@ -194,7 +198,6 @@ export default {
     },
     /** 跳转所选标签页 */
     linkTo(item) {
-      let routerObj = {};
       if (item.name != this.currentPageName) {
         this.$router.push({
           name: item.name
