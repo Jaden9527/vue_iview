@@ -157,7 +157,7 @@ export default {
               form.append(k, vm.options[k]);
             }
           }
-          form.append("file", vm.fileObj[0]);
+          form.append("file", file);
 
           vm.uploadFn(form)
             .then(res => {
