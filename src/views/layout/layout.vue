@@ -80,7 +80,7 @@
                 <Dropdown style="margin: 0px 10px" @on-click="handleTagsOption">
                   <!-- <Button type="primary">LabelOptions
                     <Icon type="ios-arrow-down"></Icon>
-                  </Button> -->
+                  </Button>-->
                   <Icon type="ios-cog-outline" size="22"/>
                   <DropdownMenu slot="list">
                     <DropdownItem name="clearAll">清除全部</DropdownItem>
@@ -111,7 +111,12 @@
         <Content
           :style="{margin: '80px 15px 15px', background: '#fff', minHeight: '260px',overflow: 'auto'}"
         >
-          <router-view :key="key"></router-view>
+          <!--缓存想要缓存的页面，实现后退不刷新-->
+          <!--加上v-if的判断，可以自定义想要缓存的组件，自定义在router里面-->
+          <keep-alive>
+            <router-view v-if="$route.meta.keepAlive" :key="key"></router-view>
+          </keep-alive>
+          <router-view v-if="!$route.meta.keepAlive" :key="key"></router-view>
         </Content>
       </Layout>
     </Layout>
