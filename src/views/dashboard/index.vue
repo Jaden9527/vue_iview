@@ -4,26 +4,41 @@
         <h2>Essential Links</h2>
         <h3>{{this.$store.state.count}}</h3>
         <Button @click="addFn" type="primary">add</Button>
-        <!-- <Button @click="reductFn" type="dashed">delete</Button> -->
+        <Button @click="uploadFn" type="dashed">上传</Button>
+
+        <uploadFile :uploadFileSetting="uploadFileSetting" @on-close="uploadClose()"></uploadFile>
     </div>
 </template>
 
 <script>
+import uploadFile from "../../components/uploadFile.vue";
 export default {
-    name: "Dashboard",
-    data() {
-        return {
-            msg: "Welcome to Your Vue.js App"
-        };
+  name: "Dashboard",
+  components: {
+    uploadFile
+  },
+  data() {
+    return {
+      msg: "Welcome to Your Vue.js App",
+      uploadFileSetting: {
+          uploadShow: false
+      }
+    };
+  },
+  methods: {
+    addFn: function() {
+      this.$store.dispatch("add", 2);
     },
-    methods: {
-        addFn: function() {
-            this.$store.dispatch('add', 2);
-        },
-        reductFn: function() {
-            this.$store.dispatch('reduct', 4);
-        }
+    reductFn: function() {
+      this.$store.dispatch("reduct", 4);
+    },
+    uploadFn: function() {
+        this.uploadFileSetting.uploadShow = true;
+    },
+    uploadClose: function() {
+        this.uploadFileSetting.uploadShow = false;
     }
+  }
 };
 </script>
 
@@ -31,17 +46,17 @@ export default {
 <style scoped>
 h1,
 h2 {
-    font-weight: normal;
+  font-weight: normal;
 }
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 li {
-    display: inline-block;
-    margin: 0 10px;
+  display: inline-block;
+  margin: 0 10px;
 }
 a {
-    color: #42b983;
+  color: #42b983;
 }
 </style>

@@ -6,12 +6,14 @@ import router from './router'
 import 'babel-polyfill';
 import iView from 'iview';
 import store from './store';
+import axios from 'axios';
 import 'iview/dist/styles/iview.css';
 import api from './common/api';
 import './common/utils/rem'; //自适应rem函数
 // import rem from './common/utils/rem';
 
 Vue.prototype.$api = api;
+Vue.prototype.$axios = axios;
 
 Vue.config.productionTip = false
 Vue.use(iView);
