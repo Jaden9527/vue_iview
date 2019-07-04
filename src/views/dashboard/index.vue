@@ -6,7 +6,7 @@
         <Button @click="addFn" type="primary">add</Button>
         <Button @click="uploadFn" type="dashed">上传</Button>
 
-        <uploadFile :uploadFileSetting="uploadFileSetting" @on-close="uploadClose()"></uploadFile>
+        <uploadFile :uploadFileSetting="uploadFileSetting" @on-close="uploadClose()" @uploadChange="uploadChange"></uploadFile>
     </div>
 </template>
 
@@ -21,7 +21,8 @@ export default {
     return {
       msg: "Welcome to Your Vue.js App",
       uploadFileSetting: {
-          uploadShow: false
+          uploadShow: false,
+          multiple: "multiple"
       }
     };
   },
@@ -37,6 +38,9 @@ export default {
     },
     uploadClose: function() {
         this.uploadFileSetting.uploadShow = false;
+    },
+    uploadChange:function(list) {
+      console.log("上传返回路径", list)
     }
   }
 };
