@@ -14,7 +14,10 @@
     <div class="uploadLayer">
       <div class="uploadContent">
         <Icon type="md-close" class="closeuploadBtn" @click="closeUploadLayer()"/>
-        <div class="warnTip">温馨提醒：如果上传的数据量较大，请耐心等候！</div>
+        <div class="warnTip">
+          <p>温馨提醒：如果上传的数据量较大，请耐心等候！</p>
+          <p>上传上限：{{uploadNum}}张</p>
+        </div>
         <div id="uploader-demo">
           <!--用来存放item-->
           <div id="fileList" class="uploader-list">
@@ -62,6 +65,13 @@ export default {
         };
       }
     },
+    uploadNum: {
+      /** 上传的数量限制，默认为1张 */
+      type: Number,
+      default: function() {
+        return 1;
+      }
+    },
     options: {
       // 上传路径和其他参数
       type: Object,
@@ -91,15 +101,26 @@ export default {
     //有文件添加进来时
     getFile: function(event) {
       var vm = this;
-      //   if (this.fileObj.length > 0) {
-      //     vm.$Message.warning("只能选择一个文件！");
-      //     return;
-      //   }
+      if (this.fileObj.length >= this.uploadNum) {
+        vm.$Message.warning("只能选择" + this.uploadNum + "个文件！");
+        this.$refs.clearFile.value = "";
+        return;
+      }
 
-      for (let i = 0; i < event.target.files.length; i++) {
+      let len = event.target.files.length;
+
+      if (len > this.uploadNum) {
+        len = this.uploadNum;
+      }
+
+      for (let i = 0; i < len; i++) {
         let file = event.target.files[i];
         let isHave = this.fileObj.some(item => {
-          if ( item.name == file.name &&item.type == file.type &&item.size == file.size ) {
+          if (
+            item.name == file.name &&
+            item.type == file.type &&
+            item.size == file.size
+          ) {
             return true;
           }
         });
@@ -144,7 +165,7 @@ export default {
                 let list = [];
                 list.push(res);
 
-                vm.$emit("uploadChange" , list);
+                vm.$emit("uploadChange", list);
               })
               .catch(err => {
                 console.log("上传失败");
@@ -164,7 +185,7 @@ export default {
               let list = [];
               list.push(res);
 
-              vm.$emit("uploadChange" , list);
+              vm.$emit("uploadChange", list);
             })
             .catch(err => {
               console.log("上传失败");
@@ -181,7 +202,7 @@ export default {
                 .then(res => {
                   list.push(res);
                   if (i == vm.fileObj.length - 1) {
-                    vm.$emit("uploadChange" , list);
+                    vm.$emit("uploadChange", list);
                   }
                 })
                 .catch(err => {
@@ -201,7 +222,7 @@ export default {
               .then(res => {
                 list.push(res);
                 if (i == vm.fileObj.length - 1) {
-                  vm.$emit("uploadChange" , list);
+                  vm.$emit("uploadChange", list);
                 }
               })
               .catch(err => {
