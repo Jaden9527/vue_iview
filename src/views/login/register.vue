@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <div class="main mainBorder">
+      <div class="main mainBorder" @keydown.enter="submit">
         <p style="text-align: center;">
           <span class="systemName">注册</span>
         </p>
