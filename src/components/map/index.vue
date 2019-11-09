@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button @click="show=true">点击选择</Button>
+    <Button @click="show=true" style="margin: 10px 0;">点击选择</Button>
     <Modal
       v-model="show"
       title="选择经纬度"
