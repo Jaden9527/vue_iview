@@ -24,6 +24,7 @@
           :class="menuitemClasses"
           accordion
           @on-select="changeMenu"
+          v-if="!isCollapsed"
         >
           <template v-for="item, index in routeList" v-if="item.show && !item.hidden">
             <MenuItem
@@ -48,6 +49,32 @@
             </Submenu>
           </template>
         </Menu>
+        <!-- 菜单栏收起 -->
+        <template v-else>
+          <template v-for="item, index in routeList" v-if="item.show && !item.hidden">
+            <div style="text-align: center;" :key="index">
+                <Dropdown transfer v-if="item.children && item.children.length > 1" placement="right-start" :key="index" @on-click="changeMenu">
+                    <Button style="width: 80px;margin-right:5px;" type="text">
+                        <i class="iconfont" v-html="item.icon" style="color:white"></i>
+                        <Icon :size="20" :color="'#fff'" :type="item.meta.icon"></Icon>
+                    </Button>
+                    <DropdownMenu style="width: 200px;" slot="list">
+                        <template v-for="(child, i) in item.children" v-if="child.show && !child.hidden">
+                            <DropdownItem :name="child.name" :key="i"><Icon :type="child.meta.icon"></Icon><span style="padding-left:10px;">{{child.meta.title}}</span></DropdownItem>
+                        </template>
+                    </DropdownMenu>
+                </Dropdown>
+                <Dropdown transfer v-else placement="right-start" :key="index" @on-click="changeMenu" style="left:100px">
+                    <Button @click="changeMenu(item.children[0].name)" style="width: 80px;margin-right:5px;" type="text">
+                        <Icon :size="20" :color="'#fff'" :type="item.children[0].meta.icon"></Icon>
+                    </Button>
+                    <DropdownMenu style="width: 200px;" slot="list">
+                        <DropdownItem :name="item.children[0].name" :key="'d' + index"><Icon :type="item.children[0].meta.icon"></Icon><span style="padding-left:10px;">{{item.children[0].meta.title}}</span></DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
+          </template>
+        </template>
       </Sider>
       <Layout>
         <!-- 头部 -->
@@ -167,6 +194,7 @@ export default {
     },
     /** 切换菜单 */
     changeMenu(name) {
+      console.log(name)
       this.$router.push({ name: name });
     },
     /** 用户信息/注销 */
@@ -383,5 +411,8 @@ body {
   transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
   vertical-align: middle;
   font-size: 22px;
+}
+.ivu-btn-text:hover {
+    background: #2d8cf0;
 }
 </style>
