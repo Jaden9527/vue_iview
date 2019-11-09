@@ -55,7 +55,7 @@
             <div style="text-align: center;" :key="index">
                 <Dropdown transfer v-if="item.children && item.children.length > 1" placement="right-start" :key="index" @on-click="changeMenu">
                     <Button style="width: 80px;margin-right:5px;" type="text">
-                        <i class="iconfont" v-html="item.icon" style="color:white"></i>
+                        <!-- <i class="iconfont" v-html="item.icon" style="color:white"></i> -->
                         <Icon :size="20" :color="'#fff'" :type="item.meta.icon"></Icon>
                     </Button>
                     <DropdownMenu style="width: 200px;" slot="list">
