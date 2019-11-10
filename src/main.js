@@ -4,10 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'babel-polyfill';
-import iView from 'iview';
+import ViewUI from 'view-design';
 import store from './store';
 import axios from 'axios';
-import 'iview/dist/styles/iview.css';
+import 'view-design/dist/styles/iview.css';
 import api from './common/api';
 import VueAMap from 'vue-amap';
 import './common/utils/rem'; //自适应rem函数
@@ -17,7 +17,7 @@ Vue.prototype.$api = api;
 Vue.prototype.$axios = axios;
 
 Vue.config.productionTip = false
-Vue.use(iView);
+Vue.use(ViewUI);
 Vue.use(VueAMap);
 /* eslint-disable no-new */
 new Vue({

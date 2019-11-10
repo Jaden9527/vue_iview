@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import iView from 'iview';
+import ViewUI from 'view-design';
 import store from '../store';
 /* Layout */
 import Layout from '@/views/layout/Layout'
@@ -117,7 +117,7 @@ router.beforeEach((to, from, next) => {
   // to: Route: 即将要进入的目标 路由对象
   // from: Route: 当前导航正要离开的路由
   // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
-  iView.LoadingBar.start();
+  ViewUI.LoadingBar.start();
   let role = false;
   if (to.meta) {
     if (to.meta.title) { //判断是否有标题
@@ -162,7 +162,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to, from, next) => {
-  iView.LoadingBar.finish();
+  ViewUI.LoadingBar.finish();
   window.scrollTo(0, 0);
 });
 
