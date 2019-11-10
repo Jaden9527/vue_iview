@@ -129,15 +129,10 @@ a {
   margin-bottom: -2px;
 }
 >>>.ivu-tabs-ink-bar {
-  background-color: #00c7ff;
+  background-color: #2d8cf0;
 }
 >>>.ivu-tabs-nav-container {
   font-size: 12px;
-}
-/**下拉选择样式**/
-.ivu-select-item {
-  padding: 0.5rem 1rem;
-  color: #ffffff;
 }
 /**表格公用样式**/
 .ivu-table-cell {
