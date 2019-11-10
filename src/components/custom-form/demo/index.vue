@@ -142,57 +142,6 @@ export default {
           ]
         }
       ],
-      filters3: [
-        {
-          label: '级联',
-          type: 'cascader',
-          key: 'cascader',
-          options: [
-            {
-              value: 'zhinan',
-              text: '指南',
-              children: [
-                {
-                  value: 'shejiyuanze',
-                  text: '设计原则',
-                  children: [
-                    {
-                      value: 'yizhi',
-                      text: '一致'
-                    },
-                    {
-                      value: 'fankui',
-                      text: '反馈'
-                    },
-                    {
-                      value: 'xiaolv',
-                      text: '效率'
-                    },
-                    {
-                      value: 'kekong',
-                      text: '可控'
-                    }
-                  ]
-                },
-                {
-                  value: 'daohang',
-                  text: '导航',
-                  children: [
-                    {
-                      value: 'cexiangdaohang',
-                      text: '侧向导航'
-                    },
-                    {
-                      value: 'dingbudaohang',
-                      text: '顶部导航'
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ],
       filtersRenderLine: [
         {
           renderLine: (h, item, form) => {
