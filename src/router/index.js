@@ -83,6 +83,12 @@ export const constantRoutes = [
         meta: { title: '首页12', icon: 'ios-navigate', roles: ['admin'],keepAlive: true }
       },
       {
+        path: 'formDemo',
+        component: () => import('@/components/custom-form/demo'),
+        name: 'formDemo',
+        meta: { title: '表单demo', icon: 'ios-navigate', roles: ['admin'],keepAlive: true }
+      },
+      {
         path: 'home13',
         component: () => import('@/views/dashboard/index'),
         name: 'home13',
