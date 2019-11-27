@@ -54,7 +54,7 @@
           <template v-for="item, index in routeList" v-if="item.show && !item.hidden">
             <div style="text-align: center;" :key="index">
                 <Dropdown transfer v-if="item.children && item.children.length > 1" placement="right-start" :key="index" @on-click="changeMenu">
-                    <Button style="width: 80px;margin-right:5px;" type="text">
+                    <Button style="width: 80px;margin-right:5px;height: 40px;" type="text">
                         <!-- <i class="iconfont" v-html="item.icon" style="color:white"></i> -->
                         <Icon :size="20" :color="'#fff'" :type="item.meta.icon"></Icon>
                     </Button>
@@ -65,7 +65,7 @@
                     </DropdownMenu>
                 </Dropdown>
                 <Dropdown transfer v-else placement="right-start" :key="index" @on-click="changeMenu" style="left:100px">
-                    <Button @click="changeMenu(item.children[0].name)" style="width: 80px;margin-right:5px;" type="text">
+                    <Button @click="changeMenu(item.children[0].name)" style="width: 80px;margin-right:5px;height: 40px;" type="text">
                         <Icon :size="20" :color="'#fff'" :type="item.children[0].meta.icon"></Icon>
                     </Button>
                     <DropdownMenu style="width: 200px;" slot="list">

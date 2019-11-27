@@ -12,15 +12,16 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "view-design": "^4.0.2",
     "jquery": "^3.4.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "nprogress": "^0.2.0",
+    "view-design": "^4.0.2",
     "vue": "^2.5.2",
     "vue-amap": "^0.5.10",
     "vue-router": "^3.0.1",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

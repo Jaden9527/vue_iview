@@ -1,8 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VuexPersistence from 'vuex-persist'
 import getters from './getters'
 import permission from './modules/permission'
 import app from './modules/app'
+
+// https://github.com/championswimmer/vuex-persist
+const vuexLocal = new VuexPersistence({
+    storage: window.sessionStorage
+})
 
 Vue.use(Vuex);
 
@@ -12,10 +18,10 @@ const store = new Vuex.Store({
     },
     getters,
     mutations: {
-        add(state, text = 1) { // 上面定义的state
+        add (state, text = 1) { // 上面定义的state
             state.count = state.count + text;
         },
-        reduct(state, text = 1) {
+        reduct (state, text = 1) {
             state.count = state.count - text;
         }
     },
@@ -30,7 +36,8 @@ const store = new Vuex.Store({
     modules: { //可以将store分割成多个模块
         permission,
         app
-    }
+    },
+    plugins: [vuexLocal.plugin]
 });
 
 export default store;
