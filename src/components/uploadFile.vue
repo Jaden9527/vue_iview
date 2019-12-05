@@ -13,20 +13,34 @@
     >
     <div class="uploadLayer">
       <div class="uploadContent">
-        <Icon type="md-close" class="closeuploadBtn" @click="closeUploadLayer()"/>
+        <Icon
+          type="md-close"
+          class="closeuploadBtn"
+          @click="closeUploadLayer()"
+        />
         <div class="warnTip">
           <p>温馨提醒：如果上传的数据量较大，请耐心等候！</p>
           <p>上传上限：{{uploadNum}}张</p>
         </div>
         <div id="uploader-demo">
           <!--用来存放item-->
-          <div id="fileList" class="uploader-list">
+          <div
+            id="fileList"
+            class="uploader-list"
+          >
             <template v-if="fileObj.length > 0">
-              <div :id="i" class="item" v-for="file, i in fileObj">
+              <div
+                :id="i"
+                class="item"
+                v-for="file, i in fileObj"
+              >
                 <h4 class="info">
                   {{file.name}}
                   <span style="padding-left:10px">
-                    <Icon type="md-close" @click="deleteFile(i)"/>
+                    <Icon
+                      type="md-close"
+                      @click="deleteFile(i)"
+                    />
                   </span>
                 </h4>
               </div>
@@ -36,11 +50,20 @@
             </template>
           </div>
           <Row>
-            <Col span="12" style="text-align: center;">
-              <Button @click="chooseFn()">选择文件</Button>
+            <Col
+              span="12"
+              style="text-align: center;"
+            >
+            <Button @click="chooseFn()">选择文件</Button>
             </Col>
-            <Col span="12" style="text-align: center;">
-              <Button type="success" @click="shangchuan()">开始上传</Button>
+            <Col
+              span="12"
+              style="text-align: center;"
+            >
+            <Button
+              type="success"
+              @click="shangchuan()"
+            >开始上传</Button>
             </Col>
           </Row>
         </div>
@@ -57,7 +80,7 @@ export default {
   props: {
     uploadFileSetting: {
       type: Object,
-      default: function() {
+      default: function () {
         return {
           uploadShow: true,
           accept: "", // 接受的上传类型
@@ -68,14 +91,14 @@ export default {
     uploadNum: {
       /** 上传的数量限制，默认为1张 */
       type: Number,
-      default: function() {
+      default: function () {
         return 1;
       }
     },
     options: {
       // 上传路径和其他参数
       type: Object,
-      default: function() {
+      default: function () {
         return {
           server: "/File/UploadMedia", // 上传路径
           sessionId: "sessionId"
@@ -83,7 +106,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       fileObj: [],
       selectFile: null
@@ -91,15 +114,15 @@ export default {
   },
   methods: {
     //选择函数
-    chooseFn: function() {
+    chooseFn: function () {
       document.getElementById("file").click();
     },
     /** 删除文件 */
-    deleteFile(index) {
+    deleteFile (index) {
       this.fileObj.splice(index, 1);
     },
     //有文件添加进来时
-    getFile: function(event) {
+    getFile: function (event) {
       var vm = this;
       if (this.fileObj.length >= this.uploadNum) {
         vm.$Message.warning("只能选择" + this.uploadNum + "个文件！");
@@ -147,25 +170,25 @@ export default {
       //   );
     },
     /** 上传前判断 */
-    shangchuan: function() {
+    shangchuan: function () {
       var vm = this;
       if (vm.fileObj == "") {
         vm.$Message.warning("请选择文件！");
         return false;
       }
 
-      /** 判断上传的文件是否为多个 */
-      if (vm.fileObj.length == 1) {
-        const file = vm.fileObj[0];
-        /** 判断是否为图片，是否需要压缩 */
+      let list = [];
+      for (let i = 0; i < vm.fileObj.length; i++) {
+        const file = vm.fileObj[i];
+
         if (file.type.indexOf("image") > -1) {
           vm.compress(file, { quality: 0.2 }).then(from => {
             vm.uploadFn(from)
               .then(res => {
-                let list = [];
                 list.push(res);
-
-                vm.$emit("uploadChange", list);
+                if (list.length == vm.fileObj.length) {
+                  vm.$emit("uploadChange", list);
+                }
               })
               .catch(err => {
                 console.log("上传失败");
@@ -182,68 +205,29 @@ export default {
 
           vm.uploadFn(form)
             .then(res => {
-              let list = [];
               list.push(res);
-
-              vm.$emit("uploadChange", list);
+              if (list.length == vm.fileObj.length) {
+                vm.$emit("uploadChange", list);
+              }
             })
             .catch(err => {
               console.log("上传失败");
             });
         }
-      } else if (vm.fileObj.length > 1) {
-        let list = [];
-        for (let i = 0; i < vm.fileObj.length; i++) {
-          const file = vm.fileObj[i];
-
-          if (file.type.indexOf("image") > -1) {
-            vm.compress(file, { quality: 0.2 }).then(from => {
-              vm.uploadFn(from)
-                .then(res => {
-                  list.push(res);
-                  if (i == vm.fileObj.length - 1) {
-                    vm.$emit("uploadChange", list);
-                  }
-                })
-                .catch(err => {
-                  console.log("上传失败");
-                });
-            });
-          } else {
-            const form = new FormData();
-            for (var k in vm.options) {
-              if (k != "server") {
-                form.append(k, vm.options[k]);
-              }
-            }
-            form.append("file", file);
-
-            vm.uploadFn(form)
-              .then(res => {
-                list.push(res);
-                if (i == vm.fileObj.length - 1) {
-                  vm.$emit("uploadChange", list);
-                }
-              })
-              .catch(err => {
-                console.log("上传失败");
-              });
-          }
-        }
       }
     },
     /** 上传文件 */
-    uploadFn(formData) {
+    uploadFn (formData) {
       let vm = this;
       let config = {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       };
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         vm.$axios
           .post(vm.options.server, formData, config)
-          .then(function(res) {
+          .then(function (res) {
             var retCode = res.data.header.retCode;
             var retMsg = res.data.header.retMsg;
             if (retCode == "000") {
@@ -257,7 +241,7 @@ export default {
 
             resolve(res);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             document.getElementById("file").value = "";
             vm.fileObj = [];
             reject(err);
@@ -266,16 +250,16 @@ export default {
     },
 
     //图片压缩
-    compress(file, obj) {
+    compress (file, obj) {
       //file是指上传的图片，obj是压缩的品质，越低越模糊
       let vm = this;
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         let reader = new FileReader();
         let image = new Image();
         reader.readAsDataURL(file);
-        reader.onload = function() {
+        reader.onload = function () {
           file.src = this.result;
-          image.onload = function() {
+          image.onload = function () {
             let width = image.width;
             let height = image.height;
             file.width = width;
@@ -288,7 +272,7 @@ export default {
             let vm = this; //这里的this 是把vue的实例对象指向改变为vm
             var img = new Image();
             img.src = path.src;
-            img.onload = function() {
+            img.onload = function () {
               var that = this; //这里的this 是把img的对象指向改变为that
               // 默认按比例压缩
               var w = that.width,
@@ -348,7 +332,7 @@ export default {
 
     //将base64码转化为file（Blob）
     //此处函数对压缩后的base64经过处理返回{size: "", type: ""}
-    convertBase64UrlToBlob(urlData) {
+    convertBase64UrlToBlob (urlData) {
       var arr = urlData.split(","),
         mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]),
@@ -360,11 +344,11 @@ export default {
       return new Blob([u8arr], { type: mime });
     },
 
-    closeUploadLayer: function() {
+    closeUploadLayer: function () {
       this.$emit("on-close");
     }
   },
-  mounted() {
+  mounted () {
     //初始化函数
   }
 };
