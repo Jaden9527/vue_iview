@@ -148,7 +148,10 @@ router.beforeEach((to, from, next) => {
     if (role) {
       next()
     } else {
-      next(`/401`)
+      next({
+        replace: true,
+        name: '401'
+      })
     }
   } else {
     //如果用户token不存在则跳转到login页面

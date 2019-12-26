@@ -40,7 +40,7 @@ export default {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/home" });
       } else {
-        this.$router.go(-2);
+        this.$router.go(-1);
       }
     }
   }
