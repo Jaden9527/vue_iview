@@ -1,8 +1,7 @@
 <template>
   <div class="errPage-container">
-    <Button type="primary" style="background:#008489" @click="back">返回</Button>
     <Row>
-      <Col :span="12">
+      <Col :xs="24" :sm="24" :md="12" :lg="12">
         <h1 class="text-jumbo text-ginormous">Oops!</h1>
         <h2>你没有权限去该页面</h2>
         <h6>如有不满请联系管理员</h6>
@@ -11,9 +10,12 @@
           <li class="link-type">
             <router-link to="/">回首页</router-link>
           </li>
+          <li class="link-type">
+            <a @click="back">返回</a>
+          </li>
         </ul>
       </Col>
-      <Col :span="12">
+      <Col :xs="24" :sm="24" :md="12" :lg="8">
         <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">
       </Col>
     </Row>
@@ -54,9 +56,9 @@ body {
 
 <style lang="less" scoped>
 .errPage-container {
-  width: 800px;
-  max-width: 100%;
+  width: 100%;
   margin: 100px auto;
+  text-align: center;
   .pan-back-btn {
     background: #008489;
     color: #fff;
@@ -80,6 +82,7 @@ body {
     font-size: 14px;
     li {
       padding-bottom: 5px;
+      list-style: none;
     }
     a {
       color: #008489;
